@@ -1,7 +1,5 @@
 <?php
 
-use Glpi\Toolbox\PluginMigration;
-
 /**
  * Install hook
  *
@@ -9,8 +7,8 @@ use Glpi\Toolbox\PluginMigration;
  */
 function plugin_centrodecusto_install()
 {
-   include_once './plugins/centrodecusto/inc/migration.class.php';
-   PluginMigration::makeMigration('centrodecusto', PluginCentrodecustoMigration::class);
+   include_once __DIR__ . '/inc/migration.class.php';
+   \Glpi\Toolbox\PluginMigration::makeMigration('centrodecusto', PluginCentrodecustoMigration::class);
    return true;
 }
 
@@ -21,7 +19,7 @@ function plugin_centrodecusto_install()
  */
 function plugin_centrodecusto_uninstall()
 {
-   include_once './plugins/centrodecusto/inc/migration.class.php';
+   include_once __DIR__ . '/inc/migration.class.php';
    $migration = new PluginCentrodecustoMigration();
    $migration->uninstall();
    return true;
