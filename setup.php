@@ -41,7 +41,8 @@ function plugin_version_centrodecusto() {
       'homepage'       => 'https://www.montreal.com.br',
       'requirements'   => [
          'glpi'   => [
-            'min' => '9.1'
+            'min' => '11.0',
+            'max' => '12.0'
          ]
       ]
    ];
