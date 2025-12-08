@@ -1,5 +1,7 @@
 <?php
 
+use Glpi\Toolbox\PluginMigration;
+
 /**
  * Install hook
  *
@@ -7,8 +9,12 @@
  */
 function plugin_centrodecusto_install()
 {
+   // Ensure the class is loaded by the autoloader before we include a file that extends it.
+   if (!class_exists(PluginMigration::class)) {
+      return false;
+   }
    include_once __DIR__ . '/inc/migration.class.php';
-   \Glpi\Toolbox\PluginMigration::makeMigration('centrodecusto', PluginCentrodecustoMigration::class);
+   PluginMigration::makeMigration('centrodecusto', PluginCentrodecustoMigration::class);
    return true;
 }
 
@@ -19,6 +25,10 @@ function plugin_centrodecusto_install()
  */
 function plugin_centrodecusto_uninstall()
 {
+   // Ensure the class is loaded by the autoloader before we include a file that extends it.
+   if (!class_exists(PluginMigration::class)) {
+      return false;
+   }
    include_once __DIR__ . '/inc/migration.class.php';
    $migration = new PluginCentrodecustoMigration();
    $migration->uninstall();

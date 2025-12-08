@@ -6,6 +6,14 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginCentrodecustoMigration extends \Glpi\Toolbox\PluginMigration
 {
+    public function __construct($do_db_checks = true)
+    {
+        // Overload the constructor to prevent DB access during uninstall
+        if ($do_db_checks) {
+            parent::__construct();
+        }
+    }
+
     public static function getMigrationSteps(): array
     {
         return [
