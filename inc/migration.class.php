@@ -4,14 +4,14 @@ if (!defined('GLPI_ROOT')) {
     die('Sorry. You can\'t access this file directly');
  }
 
-class PluginCentrodecustoMigration extends \Glpi\Toolbox\PluginMigration
+class PluginCentrodecustoMigration
 {
+    private $db;
+
     public function __construct($do_db_checks = true)
     {
-        // Overload the constructor to prevent DB access during uninstall
-        if ($do_db_checks) {
-            parent::__construct();
-        }
+        global $DB;
+        $this->db = $DB;
     }
 
     public static function getMigrationSteps(): array
@@ -35,15 +35,13 @@ class PluginCentrodecustoMigration extends \Glpi\Toolbox\PluginMigration
             return;
         }
 
-        $this->db->createTable(
-            $table_name,
-            "
-            `id` INT(11) NOT NULL AUTO_INCREMENT,
+        $query = "CREATE TABLE `" . $table_name . "` (
+            `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
             `entities_id` TINYINT(1) NOT NULL,
             `is_recursive` TINYINT(1) NOT NULL,
             `name` VARCHAR(255) NOT NULL,
             `completename` VARCHAR(255) NOT NULL,
-            `ccusto` INT(11) NOT NULL,
+            `ccusto` BIGINT UNSIGNED NOT NULL,
             `visivel_chamado` TINYINT(1) NOT NULL,
             `visivel_projeto` TINYINT(1) NOT NULL,
             `itens` TINYINT(1) NOT NULL,
@@ -53,13 +51,9 @@ class PluginCentrodecustoMigration extends \Glpi\Toolbox\PluginMigration
             `comment` TEXT,
             PRIMARY KEY (`id`),
             KEY `name` (`name`)
-            ",
-            [
-                'engine'  => 'InnoDB',
-                'charset' => 'utf8mb4',
-                'collate' => 'utf8mb4_unicode_ci',
-            ]
-        );
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci";
+        
+        $this->db->doQuery($query);
     }
 
     private function createCcustoUsersTable(): void
@@ -70,23 +64,19 @@ class PluginCentrodecustoMigration extends \Glpi\Toolbox\PluginMigration
             return;
         }
 
-        $this->db->createTable(
-            $table_name,
-            "
-            `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-            `users_id` INT(10) UNSIGNED NOT NULL,
-            `ccusto_id` INT(10) UNSIGNED NOT NULL,
+        $query = "CREATE TABLE `" . $table_name . "` (
+            `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+            `users_id` BIGINT UNSIGNED NOT NULL,
+            `ccusto_id` BIGINT UNSIGNED NOT NULL,
             `is_director` TINYINT(4) NOT NULL,
             `is_manager` TINYINT(4) NOT NULL,
             `is_belongs` TINYINT(4) NOT NULL,
-            PRIMARY KEY (`id`)
-            ",
-            [
-                'engine'  => 'InnoDB',
-                'charset' => 'utf8mb4',
-                'collate' => 'utf8mb4_unicode_ci',
-            ]
-        );
+            PRIMARY KEY (`id`),
+            KEY `users_id` (`users_id`),
+            KEY `ccusto_id` (`ccusto_id`)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci";
+        
+        $this->db->doQuery($query);
     }
 
     public function uninstall(): void
@@ -98,7 +88,7 @@ class PluginCentrodecustoMigration extends \Glpi\Toolbox\PluginMigration
 
         foreach ($tables as $table) {
             if ($this->db->tableExists($table)) {
-                $this->db->dropTable($table);
+                $this->db->doQuery("DROP TABLE IF EXISTS `" . $table . "`");
             }
         }
     }

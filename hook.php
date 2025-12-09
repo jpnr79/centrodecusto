@@ -9,13 +9,23 @@ use Glpi\Toolbox\PluginMigration;
  */
 function plugin_centrodecusto_install()
 {
-   // Ensure the class is loaded by the autoloader before we include a file that extends it.
-   if (!class_exists(PluginMigration::class)) {
+   try {
+      include_once __DIR__ . '/inc/migration.class.php';
+      $migration = new PluginCentrodecustoMigration(true);
+      
+      // Execute migration steps
+      $steps = PluginCentrodecustoMigration::getMigrationSteps();
+      foreach ($steps as $version => $method) {
+          if (method_exists($migration, $method)) {
+              $migration->$method();
+          }
+      }
+      
+      return true;
+   } catch (Exception $e) {
+      error_log("Centrodecusto install error: " . $e->getMessage());
       return false;
    }
-   include_once __DIR__ . '/inc/migration.class.php';
-   PluginMigration::makeMigration('centrodecusto', PluginCentrodecustoMigration::class);
-   return true;
 }
 
 /**
