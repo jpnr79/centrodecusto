@@ -13,6 +13,11 @@ if (!$plugin->isInstalled('centrodecusto') || !$plugin->isActivated('centrodecus
 
 class PluginCentrodecustoForm extends CommonTreeDropdown  {
 
+    // Override getTable to use the correct table name
+    public static function getTable($classname = null) {
+        return 'glpi_plugin_centrodecusto_ccusto';
+    }
+
     static function getMenuName() {
         return __('Centro de Custo', 'centrodecusto');
     }
