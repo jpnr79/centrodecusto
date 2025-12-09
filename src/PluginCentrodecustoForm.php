@@ -46,13 +46,18 @@ class PluginCentrodecustoForm extends CommonTreeDropdown  {
         $plugin->htmlaction();
     
         $items_por_pagina = 10;
-        $pagina_atual = isset($_GET['pagina']) ? $_GET['pagina'] : 1;
+        $pagina_atual = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
         $offset = ($pagina_atual - 1) * $items_por_pagina;
-        $sql = "SELECT * FROM glpi_plugin_centrodecusto_ccusto LIMIT $items_por_pagina OFFSET $offset";
-        $result = $DB->query($sql);
+        
+        // Use GLPI 11 compliant query with criteria array
+        $result = $DB->request([
+            'FROM'   => 'glpi_plugin_centrodecusto_ccusto',
+            'LIMIT'  => $items_por_pagina,
+            'START'  => $offset
+        ]);
     
         // Verificar se há registros retornados
-        if ($result && $DB->numrows($result) > 0) {
+        if (count($result) > 0) {
             echo '<table border="0" cellpadding="5" cellspacing="0" style="border-collapse: collapse; width: 100%;">'; //inicio da tabela
             echo '<tr>
                      <th style="background-color: #f2f2f2;">
@@ -70,7 +75,7 @@ class PluginCentrodecustoForm extends CommonTreeDropdown  {
             $color = '#f9f9f9'; // cinza mais claro
     
             // Loop pelos resultados e criar linhas para a tabela
-            while ($row = $DB->fetchAssoc($result)) {
+            foreach ($result as $row) {
                 // Alterna entre as cores de fundo das linhas
                 $color = ($color == '#f9f9f9') ? '#ffffff' : '#f9f9f9'; // alterna entre branco e cinza claro
                 echo '<tr style="background-color: ' . $color . ';">'; // Abre a linha com cor alternada
@@ -80,9 +85,12 @@ class PluginCentrodecustoForm extends CommonTreeDropdown  {
                 echo '</tr>'; // Fecha a linha
             }
     
-            $sql_total = "SELECT COUNT(*) AS total FROM glpi_plugin_centrodecusto_ccusto";
-            $result_total = $DB->query($sql_total);
-            $total_registros = $DB->fetchAssoc($result_total)['total'];
+            // Use GLPI 11 compliant count query
+            $result_total = $DB->request([
+                'COUNT'  => 'total',
+                'FROM'   => 'glpi_plugin_centrodecusto_ccusto'
+            ]);
+            $total_registros = $result_total->current()['total'];
             $total_paginas = ceil($total_registros / $items_por_pagina);
     
             echo '<div class="card-footer search-footer" style="display: flex; justify-content: space-between;">';
@@ -115,10 +123,15 @@ class PluginCentrodecustoForm extends CommonTreeDropdown  {
     static function getListData(){
         GLOBAL $DB;
         $data = array();
-        $sql = "SELECT id, name FROM glpi_plugin_centrodecusto_ccusto";
-        $result = $DB->query($sql);
-        if ($result && $DB->numrows($result) > 0) {
-            while ($row = $DB->fetchAssoc($result)) {
+        
+        // Use GLPI 11 compliant query with criteria array
+        $result = $DB->request([
+            'SELECT' => ['id', 'name'],
+            'FROM'   => 'glpi_plugin_centrodecusto_ccusto'
+        ]);
+        
+        if (count($result) > 0) {
+            foreach ($result as $row) {
                 $data[] = array(
                     'id' => $row['id'],
                     'name' => $row['name']
@@ -131,10 +144,15 @@ class PluginCentrodecustoForm extends CommonTreeDropdown  {
     static function getListDataUser(){
         GLOBAL $DB;
         $data2 = array();
-        $sql2 = "SELECT id, users_id, ccusto_id FROM glpi_plugin_centrodecusto_ccusto_users";
-        $result2 = $DB->query($sql2);
-        if ($result2 && $DB->numrows($result2) > 0) {
-            while ($row2 = $DB->fetchAssoc($result2)) {
+        
+        // Use GLPI 11 compliant query with criteria array
+        $result2 = $DB->request([
+            'SELECT' => ['id', 'users_id', 'ccusto_id'],
+            'FROM'   => 'glpi_plugin_centrodecusto_ccusto_users'
+        ]);
+        
+        if (count($result2) > 0) {
+            foreach ($result2 as $row2) {
                 $data2[] = array(
                     'id' => $row2['id'],
                     'users_id' => $row2['users_id'],
