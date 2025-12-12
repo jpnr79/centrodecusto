@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 use Glpi\Application\View\TemplateRenderer;
 use Glpi\RichText\RichText;
 use Glpi\Dashboard\Grid;
@@ -16,12 +17,11 @@ if (!$plugin->isInstalled('centrodecusto') || !$plugin->isActivated('centrodecus
     Html::displayNotFoundError();
 }
 
-class PluginCentrodecustoCadastro extends CommonTreeDropdown 
+class PluginCentrodecustoCadastro extends CommonTreeDropdown
 {
-    static function htmlHeader()
+    public static function htmlHeader(): void
     {
-        echo
-        <<<HTML
+        echo <<<HTML
     
     <!-- Adicione o link para o jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -113,15 +113,17 @@ class PluginCentrodecustoCadastro extends CommonTreeDropdown
     HTML;
     }
 
-    static function htmlnavigati() {
+    public static function htmlnavigati(): void
+    {
         //navigationheader
         echo '<div class="navigationheader justify-content-sm-between">';
         echo '   <div>';
         echo '   </div>';
         echo '   <div id="header_1926246407" class="card-header main-header d-flex flex-wrap mx-n2 mt-n2 align-items-stretch  align-self-end  flex-grow-1">';
-   }
+    }
 
-    static function htmldropdown() {
+    public static function htmldropdown(): void
+    {
         //dropdown
         echo '      <div class="d-none d-sm-block btn-group ms-auto">';
         echo '        <a href="/glpi/plugins/centrodecusto/front/cco.php" title="Listar Centros de custo" class="btn btn-sm btn-icon btn-ghost-secondary" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="Lista">';
@@ -133,32 +135,33 @@ class PluginCentrodecustoCadastro extends CommonTreeDropdown
         echo '      </div>';
         echo '   </div>';
         echo '</div>';
-   }
-
-   static function htmlVertical() {
-         //inicio do paleta lataral 
-         echo ' <div class="d-flex card-tabs flex-column flex-md-row vertical">
-         <ul class="nav nav-tabs flex-row flex-md-column d-none d-md-block" id="tabspanel" style="min-width: 200px" role="tablist">
-            <li class="nav-item ms-0">
-                <a class="nav-link justify-content-between pe-1 active" data-bs-toggle="tab" title="Grupo" href="#tab-Group_main-1681541691" data-bs-target="#tab-Group_main-1681541691">Centro de Custo</a>
-            </li>
-            <li class="nav-item ms-0">
-               <a class="nav-link justify-content-between pe-1" data-bs-toggle="tab" title="Grupo" href="#tab-Group_main-1681541692" data-bs-target="#tab-Group_main-1681541692">Chamados criados</a>
-            </li>
-            <li class="nav-item ms-0">
-               <a class="nav-link justify-content-between pe-1" data-bs-toggle="tab" title="Grupo" href="#tab-Group_main-1681541693" data-bs-target="#tab-Group_main-1681541693">Usuários</a>
-            </li>
-            <!-- Adicione mais links conforme necessário -->
-        </ul>
-        <select class="form-select border-2 border-secondary rounded-0 rounded-top d-md-none mb-2" id="tabspanel-select">
-           <!-- Options for mobile view -->
-           <option value="#tab-Group_main-1681541691">Centro de Custo</option>
-           <option value="#tab-Group_main-1681541692">Chamados criados</option>
-           <option value="#tab-Group_main-1681541693 ">Usuários</option>
-        </select>
-
-        ';
     }
+
+     public static function htmlVertical(): void
+     {
+          //inicio do paleta lataral
+          echo ' <div class="d-flex card-tabs flex-column flex-md-row vertical">
+          <ul class="nav nav-tabs flex-row flex-md-column d-none d-md-block" id="tabspanel" style="min-width: 200px" role="tablist">
+                <li class="nav-item ms-0">
+                     <a class="nav-link justify-content-between pe-1 active" data-bs-toggle="tab" title="Grupo" href="#tab-Group_main-1681541691" data-bs-target="#tab-Group_main-1681541691">Centro de Custo</a>
+                </li>
+                <li class="nav-item ms-0">
+                    <a class="nav-link justify-content-between pe-1" data-bs-toggle="tab" title="Grupo" href="#tab-Group_main-1681541692" data-bs-target="#tab-Group_main-1681541692">Chamados criados</a>
+                </li>
+                <li class="nav-item ms-0">
+                    <a class="nav-link justify-content-between pe-1" data-bs-toggle="tab" title="Grupo" href="#tab-Group_main-1681541693" data-bs-target="#tab-Group_main-1681541693">Usuários</a>
+                </li>
+                <!-- Adicione mais links conforme necessário -->
+          </ul>
+          <select class="form-select border-2 border-secondary rounded-0 rounded-top d-md-none mb-2" id="tabspanel-select">
+              <!-- Options for mobile view -->
+              <option value="#tab-Group_main-1681541691">Centro de Custo</option>
+              <option value="#tab-Group_main-1681541692">Chamados criados</option>
+              <option value="#tab-Group_main-1681541693 ">Usuários</option>
+          </select>
+
+          ';
+     }
 
 }
 

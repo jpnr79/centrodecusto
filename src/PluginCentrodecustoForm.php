@@ -1,4 +1,6 @@
+
 <?php
+declare(strict_types=1);
 
 if (!defined('GLPI_ROOT')) {
     die("Sorry. You can't access this file directly");
@@ -11,28 +13,39 @@ if (!$plugin->isInstalled('centrodecusto') || !$plugin->isActivated('centrodecus
     Html::displayNotFoundError();
 }
 
-class PluginCentrodecustoForm extends CommonTreeDropdown  {
+
+class PluginCentrodecustoForm extends CommonTreeDropdown
+{
 
     // Override getTable to use the correct table name
-    public static function getTable($classname = null) {
+
+    public static function getTable($classname = null): string
+    {
         return 'glpi_plugin_centrodecusto_ccusto';
     }
 
-    static function getMenuName() {
+
+    public static function getMenuName(): string
+    {
         return __('Centro de Custo', 'centrodecusto');
     }
 
-    static function getTypeName($nb = 0) {
+
+    public static function getTypeName(int $nb = 0): string
+    {
         return _n('Centro de Custo', 'Centros de Custo', $nb, 'centrodecusto');
     }
 
     
-    public static function getIcon()
+
+    public static function getIcon(): string
     {
         return "ti ti-coins";
     }
     
-    static function getMenuContent() {
+
+    public static function getMenuContent(): array
+    {
         return [
             'title'  => self::getMenuName(),
             'page'   => '/plugins/centrodecusto/front/cco.php',
@@ -41,26 +54,28 @@ class PluginCentrodecustoForm extends CommonTreeDropdown  {
         ];
     }
 
-    static function showList(){
-        GLOBAL $DB;
+
+    public static function showList(): void
+    {
+        global $DB;
         //instância a classe
         $plugin = new PluginCentrodecustoApplication();
         // Chama a classe htmlHeader()
         $plugin->htmlHeader();
         // Chama a classe htmlaction()
         $plugin->htmlaction();
-    
+
         $items_por_pagina = 10;
         $pagina_atual = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
         $offset = ($pagina_atual - 1) * $items_por_pagina;
-        
+
         // Use GLPI 11 compliant query with criteria array
         $result = $DB->request([
             'FROM'   => 'glpi_plugin_centrodecusto_ccusto',
             'LIMIT'  => $items_por_pagina,
             'START'  => $offset
         ]);
-    
+
         // Verificar se há registros retornados
         if (count($result) > 0) {
             echo '<table border="0" cellpadding="5" cellspacing="0" style="border-collapse: collapse; width: 100%;">'; //inicio da tabela
@@ -75,10 +90,10 @@ class PluginCentrodecustoForm extends CommonTreeDropdown  {
                           COMENTÁRIOS
                      </th>
                  </tr>';
-    
+
             // Inicializa uma variável para alternar entre as cores
             $color = '#f9f9f9'; // cinza mais claro
-    
+
             // Loop pelos resultados e criar linhas para a tabela
             foreach ($result as $row) {
                 // Alterna entre as cores de fundo das linhas
@@ -89,7 +104,7 @@ class PluginCentrodecustoForm extends CommonTreeDropdown  {
                 echo '<td>' . $row['comment'] . '</td>'; // Exibe o Name
                 echo '</tr>'; // Fecha a linha
             }
-    
+
             // Use GLPI 11 compliant count query
             $result_total = $DB->request([
                 'COUNT'  => 'total',
@@ -97,7 +112,7 @@ class PluginCentrodecustoForm extends CommonTreeDropdown  {
             ]);
             $total_registros = $result_total->current()['total'];
             $total_paginas = ceil($total_registros / $items_por_pagina);
-    
+
             echo '<div class="card-footer search-footer" style="display: flex; justify-content: space-between;">';
             echo '<div>Página: <select onchange="location = this.value;">';
             for ($i = 1; $i <= $total_paginas; $i++) {
@@ -105,7 +120,7 @@ class PluginCentrodecustoForm extends CommonTreeDropdown  {
                 echo "<option value='?pagina=$i' $selected>$i</option>";
             }
             echo '</select> de ' . $total_paginas . ' páginas</div>'; // Adiciona a quantidade de páginas aqui
-    
+
             echo '<div>';
             if ($pagina_atual > 1) {
                 echo '<a href="?pagina='.($pagina_atual - 1).'">Anterior</a> <- ';
@@ -123,46 +138,50 @@ class PluginCentrodecustoForm extends CommonTreeDropdown  {
             echo __('No item found');
             echo '</div>';
         }
-    } 
+    }
 
-    static function getListData(){
-        GLOBAL $DB;
-        $data = array();
-        
+
+    public static function getListData(): array
+    {
+        global $DB;
+        $data = [];
+
         // Use GLPI 11 compliant query with criteria array
         $result = $DB->request([
             'SELECT' => ['id', 'name'],
             'FROM'   => 'glpi_plugin_centrodecusto_ccusto'
         ]);
-        
+
         if (count($result) > 0) {
             foreach ($result as $row) {
-                $data[] = array(
+                $data[] = [
                     'id' => $row['id'],
                     'name' => $row['name']
-                );
+                ];
             }
         }
         return $data;
     }
 
-    static function getListDataUser(){
-        GLOBAL $DB;
-        $data2 = array();
-        
+
+    public static function getListDataUser(): array
+    {
+        global $DB;
+        $data2 = [];
+
         // Use GLPI 11 compliant query with criteria array
         $result2 = $DB->request([
             'SELECT' => ['id', 'users_id', 'ccusto_id'],
             'FROM'   => 'glpi_plugin_centrodecusto_ccusto_users'
         ]);
-        
+
         if (count($result2) > 0) {
             foreach ($result2 as $row2) {
-                $data2[] = array(
+                $data2[] = [
                     'id' => $row2['id'],
                     'users_id' => $row2['users_id'],
                     'ccusto_id'=> $row2['ccusto_id']
-                );
+                ];
             }
         }
         return $data2;

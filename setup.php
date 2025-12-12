@@ -1,30 +1,28 @@
 <?php
+declare(strict_types=1);
 
 define('CENTRODECUSTO_VERSION', '1.0.0');
 
 /**
  * Init the hooks of the plugins - Needed
- *
- * @return void
  */
-function plugin_init_centrodecusto() {
+function plugin_init_centrodecusto(): void
+{
    global $PLUGIN_HOOKS;
-
-   //required!
+   // required!
    $PLUGIN_HOOKS['csrf_compliant']['centrodecusto'] = true;
-   //$PLUGIN_HOOKS['display_login']['centrodecusto'] = 'myplugin_display_login';
+   // $PLUGIN_HOOKS['display_login']['centrodecusto'] = 'myplugin_display_login';
    $PLUGIN_HOOKS['config_page']['centrodecusto'] = 'front/cco.php';
    $PLUGIN_HOOKS['menu_entry']['centrodecusto'] = true;
    $PLUGIN_HOOKS['menu_toadd']['centrodecusto'] = ['admin' => 'PluginCentrodecustoForm'];
-
    // Display fields in any existing tab
    $PLUGIN_HOOKS['post_item_form']['centrodecusto'] = [
       'PluginCentrodecustoForm',
       'showForTab'
    ];
-
 }
 
+// ...existing code...
 
 
 /**
@@ -32,7 +30,8 @@ function plugin_init_centrodecusto() {
  *
  * @return array
  */
-function plugin_version_centrodecusto() {
+function plugin_version_centrodecusto(): array
+{
    return [
       'name'           => __('Centro de Custo', 'centrodecusto'),
       'version'        => CENTRODECUSTO_VERSION,
@@ -48,25 +47,29 @@ function plugin_version_centrodecusto() {
    ];
 }
 
+
 /**
  * Optional : check prerequisites before install : may print errors or add to message after redirect
  *
- * @return boolean
+ * @return bool
  */
-function plugin_centrodecusto_check_prerequisites() {
-   //do what the checks you want
+function plugin_centrodecusto_check_prerequisites(): bool
+{
+   // do what the checks you want
    return true;
 }
+
 
 /**
  * Check configuration process for plugin : need to return true if succeeded
  * Can display a message only if failure and $verbose is true
  *
- * @param boolean $verbose Enable verbosity. Default to false
+ * @param bool $verbose Enable verbosity. Default to false
  *
- * @return boolean
+ * @return bool
  */
-function plugin_centrodecusto_check_config($verbose = false) {
+function plugin_centrodecusto_check_config(bool $verbose = false): bool
+{
    if (true) { // Your configuration check
       return true;
    }
@@ -77,12 +80,14 @@ function plugin_centrodecusto_check_config($verbose = false) {
    return false;
 }
 
+
 /**
  * Optional: defines plugin options.
  *
  * @return array
  */
-function plugin_centrodecusto_options() {
+function plugin_centrodecusto_options(): array
+{
    return [
       Plugin::OPTION_AUTOINSTALL_DISABLED => true,
    ];

@@ -1,19 +1,38 @@
+
 <?php
+declare(strict_types=1);
 
 if (!defined('GLPI_ROOT')) {
     die('Sorry. You can\'t access this file directly');
  }
 
+
+/**
+ * Handles migration logic for Centro de Custo plugin
+ */
 class PluginCentrodecustoMigration
 {
+    /**
+     * @var \DBmysql
+     */
     private $db;
 
-    public function __construct($do_db_checks = true)
+    /**
+     * Constructor
+     *
+     * @param bool $do_db_checks
+     */
+    public function __construct(bool $do_db_checks = true)
     {
         global $DB;
         $this->db = $DB;
     }
 
+    /**
+     * Get migration steps
+     *
+     * @return array<string, string>
+     */
     public static function getMigrationSteps(): array
     {
         return [
@@ -21,12 +40,22 @@ class PluginCentrodecustoMigration
         ];
     }
 
+    /**
+     * Migration to version 1.0.0
+     *
+     * @return void
+     */
     public function migrationTo100(): void
     {
         $this->createCcustoTable();
         $this->createCcustoUsersTable();
     }
 
+    /**
+     * Create ccusto table
+     *
+     * @return void
+     */
     private function createCcustoTable(): void
     {
         $table_name = 'glpi_plugin_centrodecusto_ccusto';
@@ -52,10 +81,15 @@ class PluginCentrodecustoMigration
             PRIMARY KEY (`id`),
             KEY `name` (`name`)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci";
-        
+
         $this->db->doQuery($query);
     }
 
+    /**
+     * Create ccusto users table
+     *
+     * @return void
+     */
     private function createCcustoUsersTable(): void
     {
         $table_name = 'glpi_plugin_centrodecusto_ccusto_users';
@@ -75,10 +109,15 @@ class PluginCentrodecustoMigration
             KEY `users_id` (`users_id`),
             KEY `ccusto_id` (`ccusto_id`)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci";
-        
+
         $this->db->doQuery($query);
     }
 
+    /**
+     * Uninstall plugin tables
+     *
+     * @return void
+     */
     public function uninstall(): void
     {
         $tables = [
