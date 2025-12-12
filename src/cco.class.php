@@ -14,20 +14,10 @@ if (!$plugin->isInstalled('centrodecusto') || !$plugin->isActivated('centrodecus
     Html::displayNotFoundError();
 }
 
-class PluginCentrodecustoApplication extends CommonDBTM 
-{
-   function htmlHeader()
-   { 
-    echo
-    <<<HTML
-          <div class="btn-group flex-wrap mb-3">
-              <span class="btn bg-blue-lt pe-none" aria-disabled="true">
-                 <i class="fas fa-coins fa-lg me-2"></i>Centro de Custo
-              </span>
-              <a class="btn btn-outline-secondary" href="cco.form.php"><i class="fas fa-coins fa-lg me-2"></i>Adicionar Cco</a>
-          </div>
-      HTML;
-    }
+
+if (!class_exists('PluginCentrodecustoApplication')) {
+    class PluginCentrodecustoApplication extends CommonDBTM 
+    {
         public function htmlHeader(): void
         {
             echo <<<HTML
@@ -88,22 +78,6 @@ class PluginCentrodecustoApplication extends CommonDBTM
         <script src="../js/config.js"></script>
         HTML;
         }
-    
-    <div class="modal" id="myModal">
-       <div class="modal-dialog modal-xl">
-           <div class="modal-content">
-               <div class="modal-header">
-                   <h5 class="modal-title">Ações</h5>
-                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
-               </div>
-               <div class="modal-body"><div class="center"><img src="/glpi/pics/warning.png" alt="Aviso"><br><br><span class="b">Nenhum item selecionado</span><br></div></div>
-           </div>
-       </div>
-    </div>
-    
-        <!-- Adicione o link para o js -->
-        <script src="../js/config.js"></script>
-    HTML;
     }
 }
 

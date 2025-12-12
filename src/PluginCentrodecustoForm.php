@@ -1,12 +1,14 @@
-
 <?php
+
 declare(strict_types=1);
+
+use Plugin;
+use Html;
+use CommonTreeDropdown;
 
 if (!defined('GLPI_ROOT')) {
     die("Sorry. You can't access this file directly");
 }
-
-Session::checkRight("profile", READ);
 
 $plugin = new Plugin();
 if (!$plugin->isInstalled('centrodecusto') || !$plugin->isActivated('centrodecusto')) {
@@ -31,7 +33,7 @@ class PluginCentrodecustoForm extends CommonTreeDropdown
     }
 
 
-    public static function getTypeName(int $nb = 0): string
+    public static function getTypeName($nb = 0)
     {
         return _n('Centro de Custo', 'Centros de Custo', $nb, 'centrodecusto');
     }
