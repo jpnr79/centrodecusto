@@ -1,0 +1,133 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Access to undefined constant Plugin\:\:OPTION_AUTOINSTALL_DISABLED\.$#'
+			identifier: classConstant.notFound
+			count: 1
+			path: setup.php
+
+		-
+			message: '#^Parameter \$parser of method Composer\\InstalledVersions\:\:satisfies\(\) has invalid type Composer\\Semver\\VersionParser\.$#'
+			identifier: class.notFound
+			count: 1
+			path: vendor/composer/InstalledVersions.php
+
+		-
+			message: '#^Deprecated in PHP 8\.4\: Parameter \#2 \$builder \(Gregwar\\Captcha\\PhraseBuilderInterface\) is implicitly nullable via default value null\.$#'
+			identifier: parameter.implicitlyNullable
+			count: 1
+			path: vendor/gregwar/captcha/src/Gregwar/Captcha/CaptchaBuilder.php
+
+		-
+			message: '#^Call to an undefined method Test\\CaptchaBuilderTest\:\:assertTrue\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: vendor/gregwar/captcha/tests/CaptchaBuilderTest.php
+
+		-
+			message: '#^Unsafe usage of new static\(\)\.$#'
+			identifier: new.static
+			count: 1
+			path: vendor/nelexa/zip/src/Model/Extra/Fields/AbstractUnicodeExtraField.php
+
+		-
+			message: '#^Instantiated class Symfony\\Component\\HttpFoundation\\StreamedResponse not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: vendor/nelexa/zip/src/ZipFile.php
+
+		-
+			message: '#^Method PhpZip\\ZipFile\:\:outputAsSymfonyResponse\(\) has invalid return type Symfony\\Component\\HttpFoundation\\Response\.$#'
+			identifier: class.notFound
+			count: 1
+			path: vendor/nelexa/zip/src/ZipFile.php
+
+		-
+			message: '#^Unsafe usage of new static\(\)\.$#'
+			identifier: new.static
+			count: 1
+			path: vendor/symfony/finder/Finder.php
+
+		-
+			message: '#^Call to an undefined method Symfony\\Component\\Finder\\Iterator\\ExcludeDirectoryFilterIterator\:\:getFilename\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: vendor/symfony/finder/Iterator/ExcludeDirectoryFilterIterator.php
+
+		-
+			message: '#^Call to an undefined method Symfony\\Component\\Finder\\Iterator\\ExcludeDirectoryFilterIterator\:\:isDir\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: vendor/symfony/finder/Iterator/ExcludeDirectoryFilterIterator.php
+
+		-
+			message: '#^Deprecated in PHP 8\.4\: Parameter \#5 \$encoding \(string\) is implicitly nullable via default value null\.$#'
+			identifier: parameter.implicitlyNullable
+			count: 1
+			path: vendor/symfony/polyfill-mbstring/Mbstring.php
+
+		-
+			message: '#^Unsafe usage of new static\(\)\.$#'
+			identifier: new.static
+			count: 1
+			path: vendor/symfony/polyfill-php80/PhpToken.php
+
+		-
+			message: '#^Parameter \$container of method Twig\\RuntimeLoader\\ContainerRuntimeLoader\:\:__construct\(\) has invalid type Psr\\Container\\ContainerInterface\.$#'
+			identifier: class.notFound
+			count: 1
+			path: vendor/twig/twig/src/RuntimeLoader/ContainerRuntimeLoader.php
+
+		-
+			message: '#^Call to an undefined method Twig\\Test\\IntegrationTestCase\:\:assertEquals\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: vendor/twig/twig/src/Test/IntegrationTestCase.php
+
+		-
+			message: '#^Call to an undefined method Twig\\Test\\IntegrationTestCase\:\:assertSame\(\)\.$#'
+			identifier: method.notFound
+			count: 3
+			path: vendor/twig/twig/src/Test/IntegrationTestCase.php
+
+		-
+			message: '#^Call to an undefined method Twig\\Test\\IntegrationTestCase\:\:assertThat\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: vendor/twig/twig/src/Test/IntegrationTestCase.php
+
+		-
+			message: '#^Call to an undefined method Twig\\Test\\IntegrationTestCase\:\:assertTrue\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: vendor/twig/twig/src/Test/IntegrationTestCase.php
+
+		-
+			message: '#^Call to an undefined method Twig\\Test\\IntegrationTestCase\:\:markTestSkipped\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: vendor/twig/twig/src/Test/IntegrationTestCase.php
+
+		-
+			message: '#^Instantiated class PHPUnit\\Framework\\Constraint\\Exception not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: vendor/twig/twig/src/Test/IntegrationTestCase.php
+
+		-
+			message: '#^Instantiated class PHPUnit_Framework_Constraint_Exception not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: vendor/twig/twig/src/Test/IntegrationTestCase.php
+
+		-
+			message: '#^Call to an undefined method Twig\\Test\\NodeTestCase\:\:assertEquals\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: vendor/twig/twig/src/Test/NodeTestCase.php
+
+		-
+			message: '#^Call to an undefined method Twig\\Test\\NodeTestCase\:\:assertStringMatchesFormat\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: vendor/twig/twig/src/Test/NodeTestCase.php
