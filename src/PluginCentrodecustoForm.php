@@ -2,10 +2,6 @@
 
 declare(strict_types=1);
 
-use Plugin;
-use Html;
-use CommonTreeDropdown;
-
 if (!defined('GLPI_ROOT')) {
     die("Sorry. You can't access this file directly");
 }
