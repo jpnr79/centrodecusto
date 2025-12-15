@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 use Glpi\Toolbox\PluginMigration;
@@ -10,6 +11,8 @@ function plugin_centrodecusto_install(): bool
 {
    try {
       include_once __DIR__ . '/inc/migration.class.php';
+if (!defined('GLPI_ROOT')) { define('GLPI_ROOT', realpath(__DIR__ . '/../..')); }
+
       $migration = new PluginCentrodecustoMigration(true);
       // Execute migration steps
       $steps = PluginCentrodecustoMigration::getMigrationSteps();
