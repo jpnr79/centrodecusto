@@ -1,3 +1,4 @@
+if (!defined('GLPI_ROOT')) { define('GLPI_ROOT', realpath(__DIR__ . '/../..')); }
 <?php
 
 declare(strict_types=1);
@@ -11,8 +12,6 @@ function plugin_centrodecusto_install(): bool
 {
    try {
       include_once __DIR__ . '/inc/migration.class.php';
-if (!defined('GLPI_ROOT')) { define('GLPI_ROOT', realpath(__DIR__ . '/../..')); }
-
       $migration = new PluginCentrodecustoMigration(true);
       // Execute migration steps
       $steps = PluginCentrodecustoMigration::getMigrationSteps();
@@ -21,8 +20,20 @@ if (!defined('GLPI_ROOT')) { define('GLPI_ROOT', realpath(__DIR__ . '/../..')); 
             $migration->$method();
          }
       }
+      if (class_exists('Toolbox')) {
+         Toolbox::logInFile('centrodecusto', sprintf(
+            'INFO [%s:%s] Plugin installed successfully by user=%s',
+            __FILE__, __FUNCTION__, $_SESSION['glpiname'] ?? 'unknown'
+         ));
+      }
       return true;
    } catch (\Exception $e) {
+      if (class_exists('Toolbox')) {
+         Toolbox::logInFile('centrodecusto', sprintf(
+            'ERROR [%s:%s] Install error: %s, user=%s',
+            __FILE__, __FUNCTION__, $e->getMessage(), $_SESSION['glpiname'] ?? 'unknown'
+         ));
+      }
       error_log("Centrodecusto install error: " . $e->getMessage());
       return false;
    }
@@ -39,11 +50,23 @@ function plugin_centrodecusto_uninstall(): bool
 {
    // Ensure the class is loaded by the autoloader before we include a file that extends it.
    if (!class_exists(PluginMigration::class)) {
+      if (class_exists('Toolbox')) {
+         Toolbox::logInFile('centrodecusto', sprintf(
+            'ERROR [%s:%s] PluginMigration class missing during uninstall, user=%s',
+            __FILE__, __FUNCTION__, $_SESSION['glpiname'] ?? 'unknown'
+         ));
+      }
       return false;
    }
    include_once __DIR__ . '/inc/migration.class.php';
    $migration = new PluginCentrodecustoMigration();
    $migration->uninstall();
+   if (class_exists('Toolbox')) {
+      Toolbox::logInFile('centrodecusto', sprintf(
+         'INFO [%s:%s] Plugin uninstalled successfully by user=%s',
+         __FILE__, __FUNCTION__, $_SESSION['glpiname'] ?? 'unknown'
+      ));
+   }
    return true;
 }
 
