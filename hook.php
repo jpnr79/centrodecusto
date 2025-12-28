@@ -1,7 +1,6 @@
-if (!defined('GLPI_ROOT')) { define('GLPI_ROOT', realpath(__DIR__ . '/../..')); }
 <?php
-
 declare(strict_types=1);
+if (!defined('GLPI_ROOT')) { define('GLPI_ROOT', realpath(__DIR__ . '/../..')); }
 
 use Glpi\Toolbox\PluginMigration;
 
