@@ -65,7 +65,7 @@ class PluginCentrodecustoMigration
 
         $query = "CREATE TABLE `" . $table_name . "` (
             `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-            `entities_id` TINYINT(1) NOT NULL,
+            `entities_id` TINYINT(1) UNSIGNED NOT NULL,
             `is_recursive` TINYINT(1) NOT NULL,
             `name` VARCHAR(255) NOT NULL,
             `completename` VARCHAR(255) NOT NULL,
